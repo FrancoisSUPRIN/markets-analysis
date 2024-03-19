@@ -1,0 +1,54 @@
+# !pip install python-binance
+
+import os
+from binance.client import Client
+import pandas as pd
+
+# Récupérer les clés API à partir des variables d'environnement
+api_key = os.environ.get('BINANCE_API_KEY')
+api_secret = os.environ.get('BINANCE_API_SECRET')
+
+# Initialiser le client Binance
+client = Client(api_key, api_secret)
+
+def get_trading_pairs():
+    # Récupérer la liste des paires de trading disponibles sur Binance
+    exchange_info = client.get_exchange_info()
+    trading_pairs = [symbol['symbol'] for symbol in exchange_info['symbols']]
+    return trading_pairs
+
+def fetch_ohlcv(symbol, interval='1h', limit=10000):
+    # Récupérer les données OHLCV pour une paire de trading spécifique
+    candles = client.get_klines(symbol=symbol, interval=interval, limit=limit)
+    df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
+    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+    df.set_index('timestamp', inplace=True)
+    return df
+
+def place_order(symbol, side, quantity, order_type='MARKET'):
+    # Passer un ordre sur Binance
+    try:
+        order = client.create_order(
+            symbol=symbol,
+            side=side,
+            type=order_type,
+            quantity=quantity
+        )
+        print("Ordre passé avec succès:", order)
+    except Exception as e:
+        print("Erreur lors de la passation de l'ordre:", e)
+
+# Exemple d'utilisation
+if __name__ == "__main__":
+    # Récupérer la liste des paires de trading disponibles sur Binance
+    trading_pairs = get_trading_pairs()
+    # print("Liste des paires de trading sur Binance:", trading_pairs)
+
+    # Exemple: Récupérer les données OHLCV pour la paire BTCUSDT
+    symbol = 'BTCUSDT'
+    ohlcv_data = fetch_ohlcv(symbol)
+
+    # Exemple: Passer un ordre d'achat pour la paire BTCUSDT
+    # place_order(symbol, 'BUY', quantity=0.01)
+    
+ohlcv_data
