@@ -15,7 +15,8 @@ def get_trading_pairs():
     # Récupérer la liste des paires de trading disponibles sur Binance
     exchange_info = client.get_exchange_info()
     trading_pairs = [symbol['symbol'] for symbol in exchange_info['symbols']]
-    return trading_pairs
+    nb_of_trading_pairs = len(exchange_info['symbols'])
+    return nb_of_trading_pairs, trading_pairs
 
 def fetch_ohlcv(symbol, interval='1h', limit=10000):
     # Récupérer les données OHLCV pour une paire de trading spécifique
@@ -41,7 +42,8 @@ def place_order(symbol, side, quantity, order_type='MARKET'):
 # Exemple d'utilisation
 if __name__ == "__main__":
     # Récupérer la liste des paires de trading disponibles sur Binance
-    trading_pairs = get_trading_pairs()
+    nb_of_trading_pairs, trading_pairs = get_trading_pairs()
+    print(nb_of_trading_pairs)
     # print("Liste des paires de trading sur Binance:", trading_pairs)
 
     # Exemple: Récupérer les données OHLCV pour la paire BTCUSDT
