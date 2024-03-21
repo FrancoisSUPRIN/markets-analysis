@@ -14,54 +14,9 @@ def get_trading_pairs():
 def get_available_timeframe_on_this_plateform():
     return "ok"
 
-def fetch_ohlcv(symbol, interval='1h', limit=10000):
-    # Récupérer les données OHLCV pour une paire de trading spécifique
-    candles = client.get_klines(symbol=symbol, interval=interval, limit=limit)
+def fetch_ohlcv(symbol = "BTCUSDT", interval='1D', from_date= "1 Jan, 2015"):
+    candles = client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1DAY, from_date)
     df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
     df.set_index('timestamp', inplace=True)
     return df
-
-def find_imbalances_after_rise(df):
-    imbalances_after_rise = []
-    for i in range(1, len(df)-1):
-        if df['high'][i-1] < df['low'][i+1]:
-            prev_candle = df.iloc[i-1]
-            current_candle = df.iloc[i]
-            next_candle = df.iloc[i+1]
-            price_difference = next_candle['low'] - prev_candle['high']
-            imbalance = (*prev_candle, *current_candle, *next_candle, price_difference, current_candle['timestamp'])
-            imbalances_after_rise.append(imbalance)
-    return imbalances_after_rise
-
-def find_imbalance_after_fall(df):
-    imbalances_after_fall = []
-    for i in range(1, len(df)-1):
-        if df['low'][i - 1] > df['high'][i + 1]:
-            prev_candle = df.iloc[i-1]
-            current_candle = df.iloc[i]
-            next_candle = df.iloc[i+1]
-            price_difference = float(prev_candle['low']) - float(next_candle['high'])
-            print(price_difference)
-            imbalance = (*prev_candle, *current_candle, *next_candle, price_difference, current_candle['timestamp'])
-            imbalances_after_fall.append(imbalance)
-    return imbalances_after_fall
-
-# Récupérer les clés API à partir des variables d'environnement
-api_key = os.environ.get('BINANCE_API_KEY')
-api_secret = os.environ.get('BINANCE_API_SECRET')
-
-# Initialiser le client Binance
-client = Client(api_key, api_secret)
-
-# Récupérer l'historique des prix pour une paire donnée depuis son listing sur la plateforme
-candles = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY, "1 Jan, 2015")
-candles_count = len(candles)
-df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
-df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-df.set_index('timestamp', inplace=True)
-
-
-# Identifier tous les imbalances
-imbalance_after_fall = find_imbalance_after_fall(df)
-imbalance_after_fall
