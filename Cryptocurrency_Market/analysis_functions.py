@@ -11,7 +11,7 @@ def find_imbalances_after_rise(df):
             current_candle = df.iloc[i]
             next_candle = df.iloc[i+1]
             price_difference = float(next_candle['low']) - float(prev_candle['high'])
-            imbalance = (*prev_candle, *current_candle, *next_candle, price_difference, current_candle['timestamp'])
+            imbalance = (current_candle.name, price_difference, *prev_candle, *current_candle, *next_candle)
             imbalances_after_rise.append(imbalance)
     return imbalances_after_rise
 
