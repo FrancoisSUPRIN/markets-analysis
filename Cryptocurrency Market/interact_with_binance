@@ -46,7 +46,6 @@ def find_imbalance_after_fall(df):
             imbalances_after_fall.append(imbalance)
     return imbalances_after_fall
 
-
 # Récupérer les clés API à partir des variables d'environnement
 api_key = os.environ.get('BINANCE_API_KEY')
 api_secret = os.environ.get('BINANCE_API_SECRET')
@@ -60,6 +59,11 @@ candles_count = len(candles)
 df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
 df.set_index('timestamp', inplace=True)
-df
 
 # Identifier tous les imbalances
+imbalance_after_rise = find_imbalances_after_rise(df)
+imbalance_after_fall = find_imbalance_after_fall(df)
+all_imbalances = []
+all_imbalances.extend(imbalance_after_rise)
+all_imbalances.extend(imbalance_after_fall)
+all_imbalances
