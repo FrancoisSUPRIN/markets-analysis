@@ -1,4 +1,6 @@
-# !pip install python-binance
+import pip
+
+!pip install python-binance
 
 import os
 from binance.client import Client
