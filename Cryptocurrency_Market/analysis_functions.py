@@ -1,4 +1,5 @@
 import pandas as pd
+from traitlets import Float
 
 def find_imbalances_after_rise(df):
     # columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore']
@@ -9,7 +10,7 @@ def find_imbalances_after_rise(df):
             prev_candle = df.iloc[i-1]
             current_candle = df.iloc[i]
             next_candle = df.iloc[i+1]
-            price_difference = next_candle['low'] - prev_candle['high']
+            price_difference = float(next_candle['low']) - float(prev_candle['high'])
             imbalance = (*prev_candle, *current_candle, *next_candle, price_difference, current_candle['timestamp'])
             imbalances_after_rise.append(imbalance)
     return imbalances_after_rise
