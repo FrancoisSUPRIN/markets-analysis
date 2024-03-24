@@ -105,7 +105,7 @@ def create_market_candle(row):
         ignore=row['ignore']
     )
 
-def find_imbalance_after_fall(df):
+def find_imbalances_after_fall(df):
     imbalances_after_fall = []
     for index, row in df.iterrows():
         if index == 0 or index == len(df) - 1:
@@ -135,7 +135,7 @@ def find_imbalance_after_fall(df):
             imbalances_after_fall.append(imbalance)
     return imbalances_after_fall
 
-def find_imbalance_after_rise(df):
+def find_imbalances_after_rise(df):
     imbalances_after_rise = []
     for index, row in df.iterrows():
         if index == 0 or index == len(df) - 1:
