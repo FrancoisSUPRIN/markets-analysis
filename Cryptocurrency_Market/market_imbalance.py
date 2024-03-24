@@ -118,7 +118,7 @@ def find_imbalances_after_fall(df):
             
             imbalance = create_market_imbalance(
                 imbalance_type = "imbalance_after_fall",
-                timestamp = current_candle.timestamp, 
+                timestamp = current_candle.timestamp,
                 open_price = current_candle.open_price,
                 close_price = current_candle.close_price, 
                 delta_to_be_filled_in = delta_to_be_filled_in, 
@@ -148,7 +148,7 @@ def find_imbalances_after_rise(df):
             
             imbalance = create_market_imbalance(
                 imbalance_type = "imbalance_after_rise",
-                timestamp = current_candle.timestamp, 
+                timestamp = current_candle.timestamp,
                 open_price = current_candle.open_price,
                 close_price = current_candle.close_price, 
                 delta_to_be_filled_in = delta_to_be_filled_in, 

@@ -1,6 +1,8 @@
 import pip
 
 #!pip install python-binance
+#!pip install pytz
+
 
 import os
 from binance.client import Client
@@ -21,4 +23,11 @@ def fetch_ohlcv(client, symbol, interval, from_date): #Client.KLINE_INTERVAL_1DA
     df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
     df.set_index('timestamp', inplace=False)
+    return df
+
+def adjust_timestamps_to_local(df, timestamp_column):
+    # Convertir la colonne de timestamp en datetime
+    df[timestamp_column] = pd.to_datetime(df[timestamp_column], unit='ms', utc=True)
+    # Convertir le timestamp à l'heure locale
+    df[timestamp_column] = df[timestamp_column].dt.tz_convert('Europe/Paris')
     return df
