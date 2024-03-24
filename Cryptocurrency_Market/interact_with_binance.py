@@ -16,9 +16,9 @@ def get_trading_pairs(client):
 def get_available_timeframe_on_this_plateform(client):
     return "ok"
 
-def fetch_ohlcv(client, symbol = "BTCUSDT", interval='1D', from_date= "1 Jan, 2015"):
-    candles = client.get_historical_klines(symbol, Client.KLINE_INTERVAL_1DAY, from_date)
+def fetch_ohlcv(client, symbol, interval, from_date): #Client.KLINE_INTERVAL_1DAY
+    candles = client.get_historical_klines(symbol, interval, from_date)
     df = pd.DataFrame(candles, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore'])
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-    df.set_index('timestamp', inplace=True)
+    df.set_index('timestamp', inplace=False)
     return df
