@@ -7,6 +7,8 @@ import pip
 import os
 from binance.client import Client
 import pandas as pd
+import datetime
+import pytz
 
 def get_trading_pairs(client):
     # Récupérer la liste des paires de trading disponibles sur Binance
@@ -31,3 +33,20 @@ def adjust_timestamps_to_local(df, timestamp_column):
     # Convertir le timestamp à l'heure locale
     df[timestamp_column] = df[timestamp_column].dt.tz_convert('Europe/Paris')
     return df
+
+
+class Trade:
+    def __init__(self, res):
+        self.event_type = res["e"]
+        self.event_time = datetime.datetime.fromtimestamp(res['E'] / 1000, tz=datetime.timezone.utc)
+        self.event_time = self.event_time.astimezone(pytz.timezone('Europe/Paris'))
+        self.symbol = res["s"]
+        self.trade_id = res["t"]
+        self.price = float(res["p"])  # Convertir le prix en float
+        self.quantity = float(res["q"])  # Convertir la quantité en float
+        self.buyer_order_id = res["b"]
+        self.selle_order_id = res["a"]
+        self.trade_time = datetime.datetime.fromtimestamp(res['T'] / 1000, tz=datetime.timezone.utc)
+        self.trade_time = self.trade_time.astimezone(pytz.timezone('Europe/Paris'))
+        self.is_the_buyer_the_market_maker = res["m"]
+        self.ignore = res["M"]
