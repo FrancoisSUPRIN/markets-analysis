@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import datetime
 
 class MarketImbalance:
     def __init__(self, imbalance_type, timestamp, open_price, close_price, delta_to_be_filled_in, is_full_filled=False, was_fullfilled_at=None,
@@ -231,4 +232,38 @@ class MarketTrade:
         self.close_time = close_time
         self.duration = duration
         
-    
+
+'''from enum import Enum
+
+class Timeframe(Enum):
+    D'accord, voici la liste des durées pour chaque intervalle de temps sans "millisecondes" :
+
+- `KLINE_INTERVAL_1MINUTE`: 60000
+- `KLINE_INTERVAL_3MINUTE`: 180000
+- `KLINE_INTERVAL_5MINUTE`: 300000
+- `KLINE_INTERVAL_15MINUTE`: 900000
+- `KLINE_INTERVAL_30MINUTE`: 1800000
+- `KLINE_INTERVAL_1HOUR`: 3600000
+- `KLINE_INTERVAL_2HOUR`: 7200000
+- `KLINE_INTERVAL_4HOUR`: 14400000
+- `KLINE_INTERVAL_6HOUR`: 21600000
+- `KLINE_INTERVAL_8HOUR`: 28800000
+- `KLINE_INTERVAL_12HOUR`: 43200000
+- `KLINE_INTERVAL_1DAY`: 86400000
+- `KLINE_INTERVAL_3DAY`: 259200000
+- `KLINE_INTERVAL_1WEEK`: 604800000
+- `KLINE_INTERVAL_1MONTH`: Variable, dépendant du nombre de jours dans le mois'''
+
+        
+             
+def add_one_minute(timestamp):
+    # Convert the timestamp to a datetime object
+    dt = datetime.datetime.fromtimestamp(timestamp / 1000)
+
+    # Add one minute to the datetime object
+    dt += datetime.timedelta(minutes=1)
+
+    # Convert the updated datetime object back to a timestamp
+    updated_timestamp = int(dt.timestamp() * 1000)
+
+    return updated_timestamp
