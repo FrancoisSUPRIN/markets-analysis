@@ -6,7 +6,7 @@ import pip
 
 import os
 from binance.client import Client
-from market_imbalance import MarketCandle
+from market_candles import MarketCandle
 import pandas as pd
 import datetime
 import pytz
