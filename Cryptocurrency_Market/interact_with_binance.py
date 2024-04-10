@@ -6,6 +6,7 @@ import pip
 
 import os
 from binance.client import Client
+from market_imbalance import MarketCandle
 import pandas as pd
 import datetime
 import pytz
@@ -28,8 +29,9 @@ def fetch_ohlcv_as_df(client, symbol, interval, from_date): #Client.KLINE_INTERV
     return df
 
 def fetch_ohlcv(client, symbol, interval, from_date): #Client.KLINE_INTERVAL_1DAY
-    candles = client.get_historical_klines(symbol, interval, from_date)
-    return candles
+    historical_candles = client.get_historical_klines(symbol, interval, from_date)
+    historical_candles = [MarketCandle(*candle) for candle in historical_candles]
+    return historical_candles
 
 def adjust_timestamps_to_local(df, timestamp_column):
     # Convertir la colonne de timestamp en datetime
