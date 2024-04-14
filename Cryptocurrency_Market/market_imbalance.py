@@ -6,15 +6,15 @@ class MarketImbalance:
                  time_to_be_fullfilled=None, is_partially_filled=False, remaining_delta_open_price=None,
                  remaining_delta_to_be_filled_in=None, candles_of_identification=None, candles_of_fullfilling=None,
                  candles_of_partfilling=None):
-        self.imbalance_type = imbalance_type
-        self.timestamp = timestamp  # Timestamp (as ID)
+        self.imbalance_type = str(imbalance_type)
+        self.timestamp = int(timestamp)  # Timestamp (as ID)
         self.open_price = float(open_price)
         self.close_price = float(close_price)
         self.delta_to_be_filled_in = float(delta_to_be_filled_in)
-        self.is_full_filled = is_full_filled
+        self.is_full_filled = bool(is_full_filled)
         self.was_fullfilled_at = was_fullfilled_at
         self.time_to_be_fullfilled = time_to_be_fullfilled
-        self.is_partially_filled = is_partially_filled
+        self.is_partially_filled = bool(is_partially_filled)
         self.remaining_delta_open_price = remaining_delta_open_price
         self.remaining_delta_to_be_filled_in = remaining_delta_to_be_filled_in
         self.candles_of_identification = candles_of_identification
