@@ -62,3 +62,5 @@ def adjust_timestamps_to_local(df, timestamp_column):
     # Convertir le timestamp à l'heure locale
     df[timestamp_column] = df[timestamp_column].dt.tz_convert('Europe/Paris')
     return df
+
+

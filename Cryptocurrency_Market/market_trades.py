@@ -27,3 +27,6 @@ class Trade:
         self.trade_time = self.trade_time.astimezone(pytz.timezone('Europe/Paris'))
         self.is_the_buyer_the_market_maker = res["m"]
         self.ignore = res["M"]"""
+        
+# when a signal is detected, create a Trade
+# the Trade Object should be usable with Binance REST API
