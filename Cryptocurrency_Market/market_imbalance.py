@@ -72,8 +72,6 @@ def create_market_imbalance(imbalance_type, timestamp, open_price, close_price, 
     candles_of_partfilling=candles_of_partfilling
     )
     
-    
-
 
 def find_imbalances_after_fall(df):
     imbalances_after_fall = []
@@ -171,6 +169,9 @@ def get_fullfilled_imbalances_after_rise(imbalances_after_rise, market_data_df) 
     fullfilled_imbalances = list(filter(lambda imbalance: imbalance.is_full_filled, imbalances_after_rise))
     return fullfilled_imbalances
 
+def sort_imbalances_by_timestamp(unfilled_imbalances):
+    sorted_imbalances = sorted(unfilled_imbalances, key=lambda imb: imb.timestamp)
+    return sorted_imbalances
 
 class MarketAccount:
     def __init__(self, assets, total_value):

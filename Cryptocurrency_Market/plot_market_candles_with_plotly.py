@@ -23,3 +23,8 @@ def plot_market_candles_with_plotly(historical_candles_df):
     
     # Afficher le graphique
     fig.show()
+    
+    # Intégrer une fonctionnalité pour modifier le nom du graphique en fonction du timeframe et de la paire visualisée
+    # Intégrer une fonctionnalité pour ajuster la taille du graphique
+    # Intégrer une fonctionnalité pour afficher les imbalances sur le graphique
+    
