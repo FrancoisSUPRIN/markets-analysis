@@ -49,9 +49,10 @@ def fetch_ohlcv(client, symbol, interval, from_date): #Client.KLINE_INTERVAL_1DA
     historical_candles = [MarketCandle(*candle) for candle in historical_candles]
     return historical_candles
 
-def adjust_timestamps_to_local(df, timestamp_column):
-    df[timestamp_column] = pd.to_datetime(df[timestamp_column], unit='ms', utc=True)
-    df[timestamp_column] = df[timestamp_column].dt.tz_convert('Europe/Paris')
-    return df
+
+def adjust_timestamps_to_local(df, local_offset):
+  df.index = df.index + pd.DateOffset(hours=local_offset)  # Ajustement du fuseau horaire
+  return df
+
 
 
