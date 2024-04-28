@@ -94,3 +94,26 @@ def calculate_statistics(times_to_fill):
     print(f"Dans 98% des cas, pour combler un imbalance, il faut {format_elapsed_time(percentiles['98th'])}")
     
 """
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Fonction pour créer un histogramme avec la médiane indiquée
+def plot_fill_time_histogram(num_bins, median_time, times_to_fill):
+    # Créer l'histogramme
+    plt.figure(figsize=(12, 6))
+    plt.hist(times_to_fill, bins=num_bins, edgecolor='black')  # Histogramme avec contours noirs
+
+    # Ajouter des labels et un titre
+    plt.xlabel("Temps de comblement en heures")
+    plt.ylabel("Nombre d'imbalances comblés")
+    plt.title("Distribution des temps de comblement des imbalances")
+
+    # Ajouter une ligne verticale pour la médiane
+    plt.axvline(median_time, color='red', linestyle='dashed', linewidth=2, label=f'Médiane: {median_time:.2f} heures')
+
+    # Ajouter une légende pour la ligne de médiane
+    plt.legend()
+
+    # Afficher l'histogramme
+    plt.show()
