@@ -64,7 +64,7 @@ def calculate_statistics(times_to_fill):
     
     result_as_french = f"""
     Le temps minimum pour combler un imbalance est de {format_elapsed_time(result['min'])}
-    Le temps minimum pour combler un imbalance est de {format_elapsed_time(result['min'])}
+    Le temps maximum pour combler un imbalance est de {format_elapsed_time(result['max'])}
     Le temps moyen pour combler un imbalance est de {format_elapsed_time(result['mean'])}
     
     Dans 25% des cas, pour combler un imbalance, il faut {format_elapsed_time(percentiles['25th'])}
