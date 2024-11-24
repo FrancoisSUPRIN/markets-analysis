@@ -6,8 +6,8 @@ class MarketTrade:
         self.trade_id = res["t"]
         self.price = float(res["p"])  # Convertir le prix en float
         self.quantity = float(res["q"])  # Convertir la quantité en float
-        self.buyer_order_id = res["B"]
-        self.seller_order_id = res["a"]
+        #self.buyer_order_id = res["B"]
+        #self.seller_order_id = res["a"]
         self.trade_time = res['T']
         self.is_the_buyer_the_market_maker = res["m"]
         self.ignore = res["M"]
